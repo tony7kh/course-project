@@ -1,7 +1,7 @@
-import actionPromise from "./ActionPromise";
-import gql from "../utils/GQL";
+import { actionPromise } from "./ActionPromise";
+import {gql} from "../../utils/GQL"
 
-const actionAboutMe = (_id) => {
+export const actionAboutMe = (_id) => {
   const queryPromise = gql(
     `query userfind($id: String){
         UserFindOne(query:$id){
@@ -18,6 +18,3 @@ const actionAboutMe = (_id) => {
   );
   return actionPromise("aboutMe", queryPromise);
 };
-
-
-export default actionAboutMe;

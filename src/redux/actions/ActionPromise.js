@@ -12,7 +12,7 @@ const actionRejected = (name, error) => ({
   error,
 });
 
-const actionPromise = (name, promise) => async (dispatch) => {
+export const actionPromise = (name, promise) => async (dispatch) => {
   dispatch(actionPending(name));
   try {
     let payload = await promise;
@@ -22,5 +22,3 @@ const actionPromise = (name, promise) => async (dispatch) => {
     dispatch(actionRejected(name, err));
   }
 };
-
-export default actionPromise;

@@ -10,15 +10,15 @@ import { MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import { DriveEtaOutlined } from "@mui/icons-material";
 import { connect } from "react-redux";
-import actionAuthLogout from "../actions/ActionAuthLogout";
-import store from "../utils/Store";
+import { actionAuthLogout } from "../redux/actions/ActionAuthLogout";
+import { store } from "../redux/Store";
 
 const CUserName = connect((state) => ({
   children: state.auth.payload?.sub.login || "",
   to: "/profile",
 }))(Link);
 
-function LoginedAppBar() {
+export function LoginedAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -37,12 +37,10 @@ function LoginedAppBar() {
             color="secondary"
             variant="outlined"
           >
-            <Link to="/homepage" >Log Out</Link>
+            <Link to="/homepage">Log Out</Link>
           </Button>
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
-
-export default LoginedAppBar;

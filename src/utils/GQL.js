@@ -21,6 +21,4 @@ const getGQL =
         } else throw new Error(JSON.stringify(data.errors));
       });
 
-const gql = getGQL(`${URL}graphql`);
-
-export default gql;
+export const gql = getGQL(`${URL}graphql`);

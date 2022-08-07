@@ -1,7 +1,7 @@
-import actionPromise from "./ActionPromise";
-import gql from "../utils/GQL";
+import {actionPromise} from "./ActionPromise";
+import { gql } from "../../utils/GQL";
 
-const actionAllTracks = () => {
+export const actionAllTracks = () => {
   const queryPromise = gql(
     `query tracks{
   TrackFind(query:"[{}]"){
@@ -13,4 +13,3 @@ const actionAllTracks = () => {
   return actionPromise("allTracks", queryPromise);
 };
 
-export default actionAllTracks;

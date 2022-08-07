@@ -1,5 +1,5 @@
-import actionAllTracks from "../actions/ActionAllTracks";
-import store from "../utils/Store";
+import {actionAllTracks} from "../redux/actions/ActionAllTracks"
+import {store} from "../redux/Store";
 import { connect } from "react-redux";
 import * as React from "react";
 import Box from "@mui/material/Box";
@@ -12,7 +12,7 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 
 store.dispatch(actionAllTracks());
 
-const LeftMenuTrack = ({ track: { _id, originalFileName } }) => (
+const TrackItem = ({ track: { _id, originalFileName } }) => (
   <ListItem className="items-list__item" disablePadding>
     <ListItemButton>
       <ListItemIcon>
@@ -22,7 +22,7 @@ const LeftMenuTrack = ({ track: { _id, originalFileName } }) => (
     </ListItemButton>
   </ListItem>
 );
-const LeftMenu = ({ tracks = [], status }) =>
+const TrackList = ({ tracks = [], status }) =>
   status === "PENDING" || !status ? (
     <>LOADING</>
   ) : (
@@ -32,15 +32,13 @@ const LeftMenu = ({ tracks = [], status }) =>
     >
       <List className="LeftMenu__items-list">
         {tracks.map((track) => (
-          <LeftMenuTrack track={track} key={track._id} />
+          <TrackItem track={track} key={track._id} />
         ))}
       </List>
     </Box>
   );
 
-const CLeftMenu = connect((state) => ({
+export const CTrackList = connect((state) => ({
   tracks: state.promise.allTracks.payload,
   status: state.promise.allTracks?.status,
-}))(LeftMenu);
-
-export default CLeftMenu;
+}))(TrackList);

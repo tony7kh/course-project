@@ -1,8 +1,8 @@
-import  gql  from "../utils/GQL";
-import actionPromise from "./ActionPromise";
-import actionAuthLogin from "./ActionAuthLogin";
+import { gql } from "../../utils/GQL";
+import { actionPromise } from "./ActionPromise";
+import { actionAuthLogin } from "./ActionAuthLogin";
 
-const actionFullLogin = (login, password) => async (dispatch) => {
+export const actionFullLogin = (login, password) => async (dispatch) => {
   //тут надо задиспатчить промис логина
   const gqlQuery = `query log($login:String!, $password:String!){
                           login(login:$login, password:$password)
@@ -16,5 +16,3 @@ const actionFullLogin = (login, password) => async (dispatch) => {
   dispatch(actionAuthLogin(result));
   console.log("ТОКА ШО ОТДАЛ В AUTH REDUCER");
 };
-
-export default actionFullLogin;
