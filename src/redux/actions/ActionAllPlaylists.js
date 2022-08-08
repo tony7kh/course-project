@@ -5,7 +5,9 @@ export const actionAllPlaylists = () => {
   const queryPromise = gql(
     `query playlists{
   PlaylistFind(query:"[{}]"){
-    _id name description
+    _id name description tracks{
+      _id url originalFileName
+}
   }
 }`,
     {}

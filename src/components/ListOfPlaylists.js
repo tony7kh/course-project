@@ -1,4 +1,4 @@
-import "../style/ListOfPlaylists.css"
+import "../style/ListOfPlaylists.css";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
 import * as React from "react";
@@ -13,7 +13,7 @@ store.dispatch(actionAllPlaylists());
 
 function ActionAreaCard({ playlist: { _id, name, description } }) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card onClick={(e) => console.log("кликнул на плейлист", {_id})}>
       <CardActionArea>
         <CardMedia
           className="Playlist-item"
