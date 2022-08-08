@@ -1,0 +1,14 @@
+.Playlists{
+    display: flex;
+    flex-wrap: wrap;
+    width: 75%;
+    padding: 10px 10px;
+}
+
+.Playlist-item{
+    width: 200px;
+    min-width: 20%;
+    height: 220px;
+    margin: 10px 10px;
+    border: 1px solid black;
+}

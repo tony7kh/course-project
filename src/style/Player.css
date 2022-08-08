@@ -1,0 +1,17 @@
+.Player {
+  display: flex;
+  flex-wrap: nowrap;
+  position: fixed;
+  bottom: 0;
+  background: grey;
+  width: 100%;
+}
+.Player_title {
+  align-items: flex-start;
+  width: 100%;
+}
+.Player_buttons {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

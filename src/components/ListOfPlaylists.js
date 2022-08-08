@@ -1,4 +1,5 @@
-import {store} from "../redux/Store";
+import "../style/ListOfPlaylists.css"
+import { store } from "../redux/Store";
 import { connect } from "react-redux";
 import * as React from "react";
 import Card from "@mui/material/Card";
@@ -15,9 +16,9 @@ function ActionAreaCard({ playlist: { _id, name, description } }) {
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
+          className="Playlist-item"
           component="img"
-          height="140"
-          image="src/img/playlist-cover.png"
+          image="https://img.freepik.com/free-vector/musical-notes-pattern-on-black-background_1017-32303.jpg?w=2000&t=st=1659974772~exp=1659975372~hmac=d023aca47a64bad02c6dcb61f7557f22e788632df6eae440ff32615068104cbe"
           alt="playlist-cover"
         />
         <CardContent>
@@ -38,11 +39,9 @@ const ListOfPlaylists = ({ playlists = [], status }) =>
     <>LOADING</>
   ) : (
     <div className="Playlists">
-      <div className="Playlists_list">
-        {playlists.map((playlist) => (
-          <ActionAreaCard playlist={playlist} key={playlist._id} />
-        ))}
-      </div>
+      {playlists.map((playlist) => (
+        <ActionAreaCard playlist={playlist} key={playlist._id} />
+      ))}
     </div>
   );
 export const CListOfPlaylists = connect((state) => ({

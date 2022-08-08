@@ -1,3 +1,4 @@
+import "../style/ListOfTracks.css";
 import {actionAllTracks} from "../redux/actions/ActionAllTracks"
 import {store} from "../redux/Store";
 import { connect } from "react-redux";
@@ -27,10 +28,10 @@ const TrackList = ({ tracks = [], status }) =>
     <>LOADING</>
   ) : (
     <Box
-      className="LeftMenu"
+      className="Tracklist__items"
       sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
     >
-      <List className="LeftMenu__items-list">
+      <List className="Tracklist__items-list">
         {tracks.map((track) => (
           <TrackItem track={track} key={track._id} />
         ))}

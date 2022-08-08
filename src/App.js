@@ -26,12 +26,14 @@ const App = () => (
   <Router history={history}>
     <Provider store={store}>
       {localStorage.authToken ? <LoginedAppBar /> : <DefaultAppBar />}
-      <Switch>
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={RegisterPage} />
-        <Route path="/profile" component={ProfilePage} />
-        <Route path="/homepage" component={HomePage} />
-      </Switch>
+      <div className="Wrapper">
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/signup" component={RegisterPage} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route path="/homepage" component={HomePage} />
+        </Switch>
+      </div>
     </Provider>
   </Router>
 );

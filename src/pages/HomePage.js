@@ -6,8 +6,8 @@ import { CPlayer } from "../components/Player";
 export function HomePage() {
   return (
     <>
-      <CTrackList />
       <CListOfPlaylists />
+      <CTrackList />
       <CPlayer />
     </>
   );
