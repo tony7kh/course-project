@@ -8,12 +8,13 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
+import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlaylist";
 
 store.dispatch(actionAllPlaylists());
 
-function ActionAreaCard({ playlist: { _id, name, description } }) {
+const ActionAreaCard = ({ playlist: { _id, name, description } }) => {
   return (
-    <Card onClick={(e) => console.log("кликнул на плейлист", {_id})}>
+    <Card onClick={() => store.dispatch(actionTracksFromPlaylist(_id))}>
       <CardActionArea>
         <CardMedia
           className="Playlist-item"
@@ -32,7 +33,7 @@ function ActionAreaCard({ playlist: { _id, name, description } }) {
       </CardActionArea>
     </Card>
   );
-}
+};
 
 const ListOfPlaylists = ({ playlists = [], status }) =>
   status === "PENDING" || !status ? (

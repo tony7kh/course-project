@@ -18,7 +18,7 @@ const CUserName = connect((state) => ({
   to: "/profile",
 }))(Link);
 
-export function LoginedAppBar() {
+export const LoginedAppBar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -43,4 +43,4 @@ export function LoginedAppBar() {
       </AppBar>
     </Box>
   );
-}
+};

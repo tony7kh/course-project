@@ -1,7 +1,10 @@
 import "../style/ListOfTracks.css";
-import {actionAllTracks} from "../redux/actions/ActionAllTracks"
-import {store} from "../redux/Store";
+import { actionAllTracks } from "../redux/actions/ActionAllTracks";
+import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlaylist";
+import { actionTrackByID } from "../redux/actions/ActionTrackByID";
+import { store } from "../redux/Store";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -10,16 +13,23 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import { actionGetTrack } from "../redux/actions/playerActions/playerActions";
 
 store.dispatch(actionAllTracks());
 
 const TrackItem = ({ track: { _id, originalFileName } }) => (
   <ListItem className="items-list__item" disablePadding>
-    <ListItemButton>
+    <ListItemButton
+      onClick={() => 
+        store.dispatch(actionTrackByID(_id))
+      }
+      >
       <ListItemIcon>
         <AudiotrackIcon />
       </ListItemIcon>
-      <ListItemText>{originalFileName}</ListItemText>
+      <ListItemText>
+        <Link to={`/homepage/track/${_id}`}>{originalFileName}</Link>
+      </ListItemText>
     </ListItemButton>
   </ListItem>
 );
@@ -40,6 +50,8 @@ const TrackList = ({ tracks = [], status }) =>
   );
 
 export const CTrackList = connect((state) => ({
-  tracks: state.promise.allTracks.payload,
+  tracks:
+    state.promise?.tracksFromPlaylist?.payload?.tracks ||
+    state.promise?.allTracks?.payload,
   status: state.promise.allTracks?.status,
 }))(TrackList);

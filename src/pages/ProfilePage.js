@@ -1,22 +1,28 @@
 import Box from "@mui/material/Box";
-import {store} from "../redux/Store";
+import { store } from "../redux/Store";
 import { connect } from "react-redux";
-import {actionAboutMe} from "../redux/actions/ActionAboutMe";
+import { actionAboutMe } from "../redux/actions/ActionAboutMe";
 import Typography from "@mui/material/Typography";
-import React, { useCallback } from "react";
+import React from "react";
+import { isEmpty } from "lodash";
+
+
+localStorage.authToken &&
+  store.dispatch(actionAboutMe(store.getState().auth.payload.sub.id));
 
 const Profile = ({ user = {} }) => {
-  localStorage.authToken &&
-    store.dispatch(actionAboutMe(store.getState().auth.payload.sub.id));
   return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Typography>{user._id}</Typography>
-        <Typography>{user.login}</Typography>
-        <Typography>{Date(user.createdAt)}</Typography>
-        <Typography></Typography>
-      </Box>
-    </>
+    <Box sx={{ flexGrow: 1 }}>
+
+      {!isEmpty(user) ? (
+        <>
+          <Typography>{user._id}</Typography>
+          <Typography>{user.login}</Typography>
+          <Typography>{Date(user.createdAt)}</Typography>
+          <Typography></Typography>
+        </>
+      ): "LOADING"}
+    </Box>
   );
 };
 const CProfile = connect((state) => ({

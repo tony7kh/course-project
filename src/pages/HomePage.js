@@ -3,7 +3,7 @@ import { CTrackList } from "../components/ListOfTracks";
 import { CListOfPlaylists } from "../components/ListOfPlaylists";
 import { CPlayer } from "../components/Player";
 
-export function HomePage() {
+export const HomePage = () => {
   return (
     <>
       <CListOfPlaylists />

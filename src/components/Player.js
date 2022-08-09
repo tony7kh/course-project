@@ -1,20 +1,30 @@
 import "../style/Player.css";
 import { connect } from "react-redux";
+import { store } from "../redux/Store";
+import {
+  actionPause,
+  actionPlay,
+} from "../redux/actions/playerActions/playerActions";
 
-const Player = () => {
+const Player = ({ track = {} }) => {
   return (
     <div className="Player">
       <div className="Player_title">
         <h3>Now Playing</h3>
-        <p>NAME OF TRACK</p>
+        <div>{track.originalFileName}</div>
+        <div>{track._id}</div>
+        <div>{track.url}</div>
       </div>
       <div className="Player_buttons">
         <button>PrevTrack</button>
-        <button>Play/Pause</button>
+        <button onClick={() => store.dispatch(actionPlay())}>Play</button>
+        <button onClick={() => store.dispatch(actionPause())}>Pause</button>
         <button>NextTrack</button>
       </div>
     </div>
   );
 };
 
-export const CPlayer = connect(null, {})(Player);
+export const CPlayer = connect((state) => ({
+  track: state.promise?.trackByID?.payload,
+}))(Player);

@@ -16,7 +16,6 @@ import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ProfilePage } from "./pages/ProfilePage";
-import { ExamplePageForVanya } from "./pages/ExamplePageForVanya";
 import { store } from "./redux/Store";
 
 const history = createBrowserHistory();
@@ -29,10 +28,6 @@ const App = () => (
       {localStorage.authToken ? <LoginedAppBar /> : <DefaultAppBar />}
       <div className="Wrapper">
         <Switch>
-          <Route
-            path="/example-page-for-vanya"
-            component={ExamplePageForVanya}
-          />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={RegisterPage} />
           <Route path="/profile" component={ProfilePage} />
