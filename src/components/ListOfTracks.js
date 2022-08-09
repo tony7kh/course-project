@@ -5,7 +5,7 @@ import { actionTrackByID } from "../redux/actions/ActionTrackByID";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -13,28 +13,46 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import { actionGetTrack } from "../redux/actions/playerActions/playerActions";
+import {
+  actionGetTrack,
+  actionSetIndex,
+} from "../redux/actions/playerActions/playerActions";
 
 store.dispatch(actionAllTracks());
 
-const TrackItem = ({ track: { _id, originalFileName } }) => (
-  <ListItem className="items-list__item" disablePadding>
-    <ListItemButton
-      onClick={() => 
-        store.dispatch(actionTrackByID(_id))
-      }
+const TrackItem = ({ track }) => {
+  const { _id, originalFileName } = track;
+
+  return (
+    <ListItem className="items-list__item" disablePadding>
+      <ListItemButton
+        onClick={() => {
+          store.dispatch(actionTrackByID(_id));
+          store.dispatch(actionGetTrack(track));
+        }}
       >
-      <ListItemIcon>
-        <AudiotrackIcon />
-      </ListItemIcon>
-      <ListItemText>
-        <Link to={`/homepage/track/${_id}`}>{originalFileName}</Link>
-      </ListItemText>
-    </ListItemButton>
-  </ListItem>
-);
-const TrackList = ({ tracks = [], status }) =>
-  status === "PENDING" || !status ? (
+        <ListItemIcon>
+          <AudiotrackIcon />
+        </ListItemIcon>
+        <ListItemText>
+          <Link to={`/homepage/track/${_id}`}>{originalFileName}</Link>
+        </ListItemText>
+      </ListItemButton>
+    </ListItem>
+  );
+};
+const TrackList = ({ tracks = [], status, selectedID }) => {
+  useEffect(() => {
+    if (selectedID) {
+      console.log("selected ID", selectedID);
+      const indexOfTrack = tracks.findIndex(
+        (track) => track._id === selectedID
+      );
+      console.log("index", indexOfTrack);
+      store.dispatch(actionSetIndex(indexOfTrack));
+    }
+  }, [tracks, selectedID]);
+  return status === "PENDING" || !status ? (
     <>LOADING</>
   ) : (
     <Box
@@ -48,10 +66,12 @@ const TrackList = ({ tracks = [], status }) =>
       </List>
     </Box>
   );
+};
 
 export const CTrackList = connect((state) => ({
   tracks:
     state.promise?.tracksFromPlaylist?.payload?.tracks ||
     state.promise?.allTracks?.payload,
   status: state.promise.allTracks?.status,
+  selectedID: state.promise?.trackByID?.payload?._id,
 }))(TrackList);

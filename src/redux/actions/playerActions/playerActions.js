@@ -6,6 +6,18 @@ export const actionPause = () => (dispatch) => {
   dispatch({ type: "PLAYER_PAUSE" });
 };
 
-export const actionGetTrack = (dispatch) => {
-  dispatch({ type: "PLAYER_GET_TRACK" });
+export const actionPrevTrack = () => (dispatch) => {
+  dispatch({ type: "PLAYER_PREV_TRACK" });
 };
+
+export const actionNextTrack = () => (dispatch) => {
+  dispatch({ type: "PLAYER_NEXT_TRACK" });
+};
+
+export const actionGetTrack = (track) => (dispatch) => {
+  dispatch({ type: "PLAYER_GET_TRACK", payload: track });
+};
+
+export const actionSetIndex = (index) => (dispatch) =>{
+  dispatch({type : "PLAYER_SET_INDEX", payload: index})
+}
