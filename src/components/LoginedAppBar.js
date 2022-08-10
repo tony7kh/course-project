@@ -23,7 +23,6 @@ export const LoginedAppBar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {/* <Header /> */}
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="homepage">Audioplayer</Link>
           </Typography>

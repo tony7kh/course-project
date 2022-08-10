@@ -17,6 +17,7 @@ import {
   actionGetTrack,
   actionSetIndex,
 } from "../redux/actions/playerActions/playerActions";
+import { Typography } from "@mui/material";
 
 store.dispatch(actionAllTracks());
 
@@ -35,13 +36,13 @@ const TrackItem = ({ track }) => {
           <AudiotrackIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link to={`/homepage/track/${_id}`}>{originalFileName}</Link>
+          <Link to={`/homepage/track/:${_id}`}>{originalFileName}</Link>
         </ListItemText>
       </ListItemButton>
     </ListItem>
   );
 };
-const TrackList = ({ tracks = [], status, selectedID }) => {
+const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
   useEffect(() => {
     if (selectedID) {
       console.log("selected ID", selectedID);
@@ -55,10 +56,8 @@ const TrackList = ({ tracks = [], status, selectedID }) => {
   return status === "PENDING" || !status ? (
     <>LOADING</>
   ) : (
-    <Box
-      className="Tracklist__items"
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-    >
+    <Box className="Tracklist__items" sx={{ width: "100%", maxWidth: 360 }}>
+      <Typography variant="h6">{playlistName}</Typography>
       <List className="Tracklist__items-list">
         {tracks.map((track) => (
           <TrackItem track={track} key={track._id} />
@@ -69,9 +68,8 @@ const TrackList = ({ tracks = [], status, selectedID }) => {
 };
 
 export const CTrackList = connect((state) => ({
-  tracks:
-    state.promise?.tracksFromPlaylist?.payload?.tracks ||
-    state.promise?.allTracks?.payload,
+  tracks: state.promise?.tracksFromPlaylist?.payload?.tracks,
   status: state.promise.allTracks?.status,
   selectedID: state.promise?.trackByID?.payload?._id,
+  playlistName: state.promise?.tracksFromPlaylist?.payload?.name,
 }))(TrackList);

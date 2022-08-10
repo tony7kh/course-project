@@ -2,8 +2,8 @@
   display: flex;
   flex-wrap: nowrap;
   position: fixed;
+  background: rgba(180,180,180, 0.9);
   bottom: 0;
-  background: grey;
   width: 100%;
 }
 .Player_title {

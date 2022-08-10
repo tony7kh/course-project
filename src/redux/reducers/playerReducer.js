@@ -21,7 +21,7 @@ export function playerReducer(
       track: {},
       playlist: {},
       currentTime: 0,
-      volume: 0,
+      volume: 1,
     };
   }
   if (type === "PLAYER_PLAY") {
@@ -51,18 +51,21 @@ export function playerReducer(
     };
   }
   if (type === "PLAYER_PREV_TRACK") {
-    console.log("prevTrack");
     return {
       ...state,
       trackIndex: state.trackIndex - 1,
     };
   }
   if (type === "PLAYER_NEXT_TRACK") {
-    console.log("nextTrack");
-    console.log(state);
     return {
       ...state,
       trackIndex: state.trackIndex + 1,
+    };
+  }
+  if (type === "PLAYER_SET_VOLUME") {
+    return {
+      ...state,
+      volume: payload,
     };
   }
   return state;

@@ -18,6 +18,10 @@ export const actionGetTrack = (track) => (dispatch) => {
   dispatch({ type: "PLAYER_GET_TRACK", payload: track });
 };
 
-export const actionSetIndex = (index) => (dispatch) =>{
-  dispatch({type : "PLAYER_SET_INDEX", payload: index})
-}
+export const actionSetIndex = (index) => (dispatch) => {
+  dispatch({ type: "PLAYER_SET_INDEX", payload: index });
+};
+
+export const actionSetVolume = (volume) => (dispatch) => {
+  dispatch({ type: "PLAYER_SET_VOLUME", payload: volume });
+};
