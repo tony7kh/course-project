@@ -27,7 +27,9 @@ const LoginForm = ({ onLogin }) => {
           : "Enter the password"}
       </div>
       <button
-        onClick={() => onLogin(login, password)}
+        onClick={() => {
+          onLogin(login, password);
+        }}
         disabled={
           (login.length > 3 ? false : true) ||
           (password.length > 5 ? false : true)

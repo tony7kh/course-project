@@ -40,11 +40,13 @@ const ContinuousSlider = () => {
 
 const Player = ({
   track = {},
-  tracksFromPlaylist,
+  tracksFromPlaylist = [],
   trackCurrentIndex,
   volume,
 }) => {
   const [currentTrack, setCurrentTrack] = useState({});
+  const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(false);
+  const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
   useEffect(() => {
     if (trackCurrentIndex > -1) {
@@ -53,12 +55,34 @@ const Player = ({
       setCurrentTrack(trackFromPlaylist);
     }
   }, [tracksFromPlaylist, trackCurrentIndex]);
+
+  useEffect(() => {
+    if (!isEmpty(tracksFromPlaylist)) {
+      const index = tracksFromPlaylist.indexOf(currentTrack);
+      if (index === 0) {
+        setPrevButtonDisabled(true);
+      } else {
+        setPrevButtonDisabled(false);
+      }
+      if (index === tracksFromPlaylist.length - 1) {
+        setNextButtonDisabled(true);
+      } else {
+        setNextButtonDisabled(false);
+      }
+    }
+  }, [tracksFromPlaylist, currentTrack]);
+
   useEffect(() => {
     myAudio.volume = volume;
   }, [volume]);
 
   let myAudio = new Audio();
-  myAudio.src = URL + currentTrack.url;
+  useEffect(() => {
+    if (!isEmpty(currentTrack)) {
+      myAudio.src = URL + currentTrack.url;
+      myAudio.play();
+    }
+  }, [currentTrack]);
 
   const playAudio = () => {
     myAudio.play();
@@ -69,10 +93,14 @@ const Player = ({
     store.dispatch(actionPause());
   };
   const prevTrack = () => {
+    myAudio.pause();
+    myAudio.removeAttribute("src");
     store.dispatch(actionPrevTrack());
   };
 
   const nextTrack = () => {
+    myAudio.pause();
+    myAudio.removeAttribute("src");
     store.dispatch(actionNextTrack());
   };
 
@@ -80,7 +108,7 @@ const Player = ({
     <Box className="Player">
       {!isEmpty(currentTrack) ? (
         <>
-          <audio src={URL + currentTrack.url}></audio>
+          <audio src={URL + currentTrack.url} volume={volume}></audio>
         </>
       ) : (
         "Please, choose a track"
@@ -92,10 +120,14 @@ const Player = ({
         </Typography>
       </Box>
       <Box className="Player_buttons">
-        <Button onClick={() => prevTrack()}>PrevTrack</Button>
+        <Button onClick={() => prevTrack()} disabled={isPrevButtonDisabled}>
+          PrevTrack
+        </Button>
         <Button onClick={() => playAudio()}>Play</Button>
         <Button onClick={() => pauseAudio()}>Pause</Button>
-        <Button onClick={() => nextTrack()}>NextTrack</Button>
+        <Button onClick={() => nextTrack()} disabled={isNextButtonDisabled}>
+          NextTrack
+        </Button>
         <ContinuousSlider />
       </Box>
     </Box>

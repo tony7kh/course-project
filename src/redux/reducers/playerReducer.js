@@ -22,6 +22,8 @@ export function playerReducer(
       playlist: {},
       currentTime: 0,
       volume: 1,
+      prevButtonDisabled: false,
+      nextButtonDisabled: false,
     };
   }
   if (type === "PLAYER_PLAY") {

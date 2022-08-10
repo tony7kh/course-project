@@ -32,7 +32,10 @@ export const LoginedAppBar = () => {
             </Link>
           </Typography>
           <Button
-            onClick={() => store.dispatch(actionAuthLogout())}
+            onClick={() => {
+              store.dispatch(actionAuthLogout());
+              window.location.replace("/");
+            }}
             color="secondary"
             variant="outlined"
           >

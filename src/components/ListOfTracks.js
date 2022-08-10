@@ -4,7 +4,7 @@ import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlayl
 import { actionTrackByID } from "../redux/actions/ActionTrackByID";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -43,6 +43,8 @@ const TrackItem = ({ track }) => {
   );
 };
 const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
+  const params = useLocation();
+  console.log("params", params);
   useEffect(() => {
     if (selectedID) {
       console.log("selected ID", selectedID);
@@ -53,6 +55,7 @@ const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
       store.dispatch(actionSetIndex(indexOfTrack));
     }
   }, [tracks, selectedID]);
+
   return status === "PENDING" || !status ? (
     <>LOADING</>
   ) : (
