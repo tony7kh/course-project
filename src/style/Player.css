@@ -1,17 +1,19 @@
 .Player {
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: column;
   position: fixed;
-  background: rgba(180,180,180, 0.9);
+  padding: 30px 20px;
+  background: rgba(180, 180, 180, 0.9);
   bottom: 0;
+  right: 0;
+  width: 21%;
+}
+
+.Player_progress_bar {
   width: 100%;
 }
-.Player_title {
-  align-items: flex-start;
-  width: 100%;
-}
-.Player_buttons {
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+.Player_volume_slider {
+  max-width: 50%;
+  margin: 0 10px;
 }

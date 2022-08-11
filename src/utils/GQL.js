@@ -1,4 +1,4 @@
-import URL from "../Constants";
+import {URL} from "../Constants";
 
 const getGQL =
   (url) =>

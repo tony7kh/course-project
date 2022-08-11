@@ -9,44 +9,25 @@ import {
   actionNextTrack,
   actionSetVolume,
 } from "../redux/actions/playerActions/playerActions";
-import URL from "../Constants";
+import { URL } from "../Constants";
 import { isEmpty } from "lodash";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
 
-const ContinuousSlider = () => {
-  const [volume, setVolume] = useState(100);
-
-  const handleChange = (event, newVolume) => {
-    setVolume(newVolume);
-    store.dispatch(actionSetVolume(newVolume / 100));
-  };
-
-  return (
-    <Box sx={{ width: 200 }}>
-      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-        <VolumeDown />
-        <Slider aria-label="Volume" value={volume} onChange={handleChange} />
-        <VolumeUp />
-      </Stack>
-    </Box>
-  );
-};
-
-const Player = ({
-  track = {},
-  tracksFromPlaylist = [],
-  trackCurrentIndex,
-  volume,
-}) => {
+const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
   const [currentTrack, setCurrentTrack] = useState({});
+  const [duration, setDuration] = useState("00:00");
+  const [sliderValue, setSliderValue] = useState(0);
+  const [currentTime, setCurrentTime] = useState("00:00");
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(false);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
+  const [volume, setVolume] = useState(100);
+  let audioRef;
+  let sliderRef;
 
   useEffect(() => {
     if (trackCurrentIndex > -1) {
@@ -73,52 +54,108 @@ const Player = ({
   }, [tracksFromPlaylist, currentTrack]);
 
   useEffect(() => {
-    myAudio.volume = volume;
-  }, [volume]);
-
-  let myAudio = new Audio();
-  useEffect(() => {
     if (!isEmpty(currentTrack)) {
-      myAudio.src = URL + currentTrack.url;
-      myAudio.play();
+      audioRef.src = URL + currentTrack.url;
+      audioRef.play();
     }
   }, [currentTrack]);
 
+  const calcTrackLength = (s) => {
+    const minutes = Math.floor(s / 60);
+    const seconds = Math.floor(s % 60);
+    const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${minutes}:${returnedSeconds}`;
+  };
+
+  const onTimeUpdate = () => {
+    setSliderValue(Math.floor(audioRef.currentTime));
+    setCurrentTime(calcTrackLength(sliderRef.value));
+  };
+
+  const onLoadMetadata = () => {
+    setDuration(calcTrackLength(audioRef.duration));
+    setSliderMax();
+  };
+
+  const setSliderMax = () => {
+    sliderRef.max = Math.floor(audioRef.duration);
+  };
+
+  const onSliderInput = () => {
+    setCurrentTime(calcTrackLength(sliderRef.value));
+  };
+
+  const onSliderChange = () => {
+    audioRef.currentTime = sliderRef.value;
+  };
+
   const playAudio = () => {
-    myAudio.play();
+    audioRef.play();
     store.dispatch(actionPlay());
   };
   const pauseAudio = () => {
-    myAudio.pause();
+    audioRef.pause();
     store.dispatch(actionPause());
   };
   const prevTrack = () => {
-    myAudio.pause();
-    myAudio.removeAttribute("src");
+    audioRef.pause();
+    audioRef.removeAttribute("src");
     store.dispatch(actionPrevTrack());
   };
 
   const nextTrack = () => {
-    myAudio.pause();
-    myAudio.removeAttribute("src");
+    audioRef.pause();
+    audioRef.removeAttribute("src");
     store.dispatch(actionNextTrack());
   };
 
+  const onVolumeChange = (event) => {
+    const volume = event.target.value;
+    setVolume(volume);
+    audioRef.volume = volume / 100;
+    store.dispatch(actionSetVolume(volume));
+  };
+  const toggleMute = (event) => {
+    const volume = audioRef.volume;
+    volume > 0 ? (audioRef.volume = 0) : (audioRef.volume = volume);
+  };
   return (
     <Box className="Player">
+      <Box>
+        {" "}
+        <input
+          ref={(e) => {
+            sliderRef = e;
+          }}
+          onInput={onSliderInput}
+          onChange={onSliderChange}
+          className="Player_progress_bar"
+          type="range"
+          max="100"
+          value={sliderValue}
+        />
+      </Box>
       {!isEmpty(currentTrack) ? (
         <>
-          <audio src={URL + currentTrack.url} volume={volume}></audio>
+          <audio
+            onTimeUpdate={onTimeUpdate}
+            onLoadedMetadata={onLoadMetadata}
+            ref={(e) => {
+              audioRef = e;
+            }}
+            src={URL + currentTrack.url}
+          ></audio>
         </>
       ) : (
         "Please, choose a track"
       )}
-
       <Box className="Player_title">
+        {currentTime} / {duration.toString()}
         <Typography variant="h3" component="div">
           {currentTrack.originalFileName}
         </Typography>
       </Box>
+
       <Box className="Player_buttons">
         <Button onClick={() => prevTrack()} disabled={isPrevButtonDisabled}>
           PrevTrack
@@ -128,7 +165,16 @@ const Player = ({
         <Button onClick={() => nextTrack()} disabled={isNextButtonDisabled}>
           NextTrack
         </Button>
-        <ContinuousSlider />
+        <VolumeDown />
+        <Slider
+          className="Player_volume_slider"
+          onChange={onVolumeChange}
+          type="range"
+          max="100"
+          value={volume}
+        />
+        <VolumeUp />
+        <Button onClick={toggleMute}>Mute</Button>
       </Box>
     </Box>
   );
@@ -138,5 +184,4 @@ export const CPlayer = connect((state) => ({
   track: state.promise?.trackByID?.payload,
   tracksFromPlaylist: state.promise?.tracksFromPlaylist?.payload?.tracks,
   trackCurrentIndex: state.player?.trackIndex,
-  volume: state.player?.volume,
 }))(Player);

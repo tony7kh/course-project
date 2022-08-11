@@ -1,10 +1,9 @@
 import "../style/ListOfTracks.css";
 import { actionAllTracks } from "../redux/actions/ActionAllTracks";
-import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlaylist";
 import { actionTrackByID } from "../redux/actions/ActionTrackByID";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -18,6 +17,7 @@ import {
   actionSetIndex,
 } from "../redux/actions/playerActions/playerActions";
 import { Typography } from "@mui/material";
+import { HOME_PAGE_PATH } from "../Constants";
 
 store.dispatch(actionAllTracks());
 
@@ -36,15 +36,15 @@ const TrackItem = ({ track }) => {
           <AudiotrackIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link to={`/homepage/track/:${_id}`}>{originalFileName}</Link>
+          <Link underline="hover" to={`${HOME_PAGE_PATH}/track/${_id}`}>
+            {originalFileName}
+          </Link>
         </ListItemText>
       </ListItemButton>
     </ListItem>
   );
 };
 const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
-  const params = useLocation();
-  console.log("params", params);
   useEffect(() => {
     if (selectedID) {
       console.log("selected ID", selectedID);

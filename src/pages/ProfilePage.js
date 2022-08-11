@@ -15,7 +15,7 @@ const Profile = ({ user = {} }) => {
     <Box sx={{ flexGrow: 1 }}>
       {!isEmpty(user) ? (
         <>
-          <Typography>{!(user.avatar) && "Тут может быть ваше фото"}</Typography>
+          <Typography>{user.avatar || "Тут может быть ваше фото"}</Typography>
           <Typography variant="h3">{user.login}</Typography>
           <Typography variant="h6">ID:{user._id}</Typography>
         </>
