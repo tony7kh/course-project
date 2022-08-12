@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import { HOME_PAGE_PATH } from "../Constants";
 
 const LoginForm = ({ onLogin }) => {
   const [login, setLogin] = useState("");
@@ -56,6 +57,9 @@ const LoginForm = ({ onLogin }) => {
             <Button
               onClick={() => {
                 onLogin(login, password);
+                setInterval(() => {
+                  window.location.href = HOME_PAGE_PATH;
+                }, 0);
               }}
               disabled={
                 (login.length > 3 ? false : true) ||

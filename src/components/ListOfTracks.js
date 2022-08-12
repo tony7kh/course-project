@@ -18,8 +18,9 @@ import {
 } from "../redux/actions/playerActions/playerActions";
 import { Typography } from "@mui/material";
 import { HOME_PAGE_PATH } from "../Constants";
+import isEmpty from "lodash.isempty";
 
-store.dispatch(actionAllTracks());
+// store.dispatch(actionAllTracks());
 
 const TrackItem = ({ track }) => {
   const { _id, originalFileName } = track;
@@ -56,9 +57,7 @@ const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
     }
   }, [tracks, selectedID]);
 
-  return status === "PENDING" || !status ? (
-    <>LOADING</>
-  ) : (
+  return !isEmpty(tracks) ? (
     <Box className="Tracklist__items" sx={{ width: "100%", maxWidth: 360 }}>
       <Typography variant="h6">{playlistName}</Typography>
       <List className="Tracklist__items-list">
@@ -67,6 +66,8 @@ const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
         ))}
       </List>
     </Box>
+  ) : (
+    ""
   );
 };
 

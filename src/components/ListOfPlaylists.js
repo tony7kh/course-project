@@ -12,7 +12,10 @@ import { CardActionArea } from "@mui/material";
 import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
 import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlaylist";
 
-store.dispatch(actionAllPlaylists());
+import { Triangle } from "react-loader-spinner";
+
+
+store.dispatch(actionAllPlaylists("[{}]"));
 
 const ActionAreaCard = ({ playlist: { _id, name, description } }) => {
   return (
@@ -39,7 +42,7 @@ const ActionAreaCard = ({ playlist: { _id, name, description } }) => {
 
 const ListOfPlaylists = ({ playlists = [], status }) =>
   status === "PENDING" || !status ? (
-    <>LOADING</>
+    <Triangle color="#00BFFF" height={80} width={80} />
   ) : (
     <div className="Playlists">
       {playlists.map((playlist) => (
