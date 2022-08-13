@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import CardMedia from "@mui/material/CardMedia";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import {HOME_PAGE_PATH} from "../Constants"
+import { HOME_PAGE_PATH } from "../Constants";
 
 localStorage.authToken &&
   store.dispatch(actionAboutMe(store.getState().auth.payload.sub.id));
@@ -66,12 +66,12 @@ const actionNewPlaylistWithTracks = async (name, description, tracks) => {
 };
 const UploadBlock = ({
   _id,
-  defaultImaages = [],
+  defaultTracks = [],
   valueOfLoadingPicture,
   actionBackToStart,
 }) => {
-  const [tracks, ChangeTracks] = useState(defaultImaages);
-  const [tracksIds, ChangeTracksIds] = useState(defaultImaages);
+  const [tracks, ChangeTracks] = useState(defaultTracks);
+  const [tracksIds, ChangeTracksIds] = useState(defaultTracks);
 
   const [name, ChangeName] = useState("");
   const [description, ChangeDescription] = useState("");
@@ -102,18 +102,18 @@ const UploadBlock = ({
           value={description}
         />
         <Drop
-          imageData={(image) => {
-            console.log("!!!!!", image);
+          trackData={(track) => {
+            console.log("!!!!!", track);
             ChangeTracks((prevArray) =>
               prevArray.concat(
-                image.map((img) => {
+                track.map((img) => {
                   return { url: `${URL}${img.url}` };
                 })
               )
             );
             ChangeTracksIds((prevArray) =>
               prevArray.concat(
-                image.map((img) => {
+                track.map((img) => {
                   return { _id: img._id };
                 })
               )
@@ -123,26 +123,22 @@ const UploadBlock = ({
         />
         <div style={{ display: "flex" }}>
           {Array.isArray(tracks)
-            ? tracks.map((image, index) => (
+            ? tracks.map((track, index) => (
                 <CardMedia
-                  // onClick={ChangeImagesIds(images => images.filter())}
                   component="img"
                   height="50px"
                   width="50px"
-                  image={image.url}
+                  track={track.url}
                   sx={{ width: "10%" }}
                 />
               ))
             : ""}
         </div>
-        {/* Select images: {images.length}{console.log('imagesssss',images, imagesIds)} */}
-        {/* <Button onClick={()=>{}}><h3>Drop to start values</h3></Button> */}
         <Button
           onClick={() => {
             tracks.length = 0
               ? actionNewPlaylist(name, description)
               : actionNewPlaylistWithTracks(name, description, tracksIds);
-            ;
           }}
         >
           <h3>Add playlist</h3>

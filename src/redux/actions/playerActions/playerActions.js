@@ -25,3 +25,15 @@ export const actionSetIndex = (index) => (dispatch) => {
 export const actionSetVolume = (volume) => (dispatch) => {
   dispatch({ type: "PLAYER_SET_VOLUME", payload: volume });
 };
+
+export const actionSetPlaylist = (playlist) => (dispatch) => {
+  dispatch({ type: "PLAYER_SET_PLAYLIST", payload: playlist });
+};
+
+export const actionSetDuration = (duration) => (dispatch) => {
+  dispatch({ type: "PLAYER_SET_DURATION", payload: duration });
+};
+
+export const actionSetCurrentTime = (currentTime) => (dispatch) => {
+  dispatch({ type: "PLAYER_SET_CURRENT_TIME", payload: currentTime });
+};

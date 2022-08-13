@@ -9,17 +9,25 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 
+import { actionSetPlaylist } from "../redux/actions/playerActions/playerActions";
+
 import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
 import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlaylist";
 
 import { Triangle } from "react-loader-spinner";
 
-
 store.dispatch(actionAllPlaylists("[{}]"));
 
-const ActionAreaCard = ({ playlist: { _id, name, description } }) => {
+const ActionAreaCard = ({ playlist = {} }) => {
+  const { _id, name, description } = playlist;
+
   return (
-    <Card onClick={() => store.dispatch(actionTracksFromPlaylist(_id))}>
+    <Card
+      onClick={() => {
+        store.dispatch(actionTracksFromPlaylist(_id));
+        store.dispatch(actionSetPlaylist(playlist));
+      }}
+    >
       <CardActionArea>
         <CardMedia
           className="Playlist-item"

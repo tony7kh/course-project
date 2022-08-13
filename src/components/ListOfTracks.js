@@ -47,7 +47,7 @@ const TrackItem = ({ track }) => {
 };
 const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
   useEffect(() => {
-    if (selectedID) {
+    if (selectedID && tracks !== null) {
       console.log("selected ID", selectedID);
       const indexOfTrack = tracks.findIndex(
         (track) => track._id === selectedID
@@ -57,7 +57,7 @@ const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
     }
   }, [tracks, selectedID]);
 
-  return !isEmpty(tracks) ? (
+  return !isEmpty(tracks) && tracks !== null ? (
     <Box className="Tracklist__items" sx={{ width: "100%", maxWidth: 360 }}>
       <Typography variant="h6">{playlistName}</Typography>
       <List className="Tracklist__items-list">

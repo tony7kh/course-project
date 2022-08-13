@@ -5,15 +5,19 @@ import { CPlayer } from "../components/Player";
 import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
 import { actionAllTracks } from "../redux/actions/ActionAllTracks";
 import { store } from "../redux/Store";
+import { Redirect } from "react-router-dom";
+import { PUBLIC_PAGE_PATH } from "../Constants";
 
 store.dispatch(actionAllPlaylists());
 store.dispatch(actionAllTracks());
 export const HomePage = () => {
-  return (
+  return localStorage.authToken ? (
     <>
       <CListOfPlaylists />
       <CTrackList />
       <CPlayer />
     </>
+  ) : (
+    <Redirect to={PUBLIC_PAGE_PATH} />
   );
 };

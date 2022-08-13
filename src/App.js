@@ -15,7 +15,9 @@ import {
   REGISTER_PAGE_PATH,
   PROFILE_PAGE_PATH,
   HOME_PAGE_PATH,
+  PUBLIC_PAGE_PATH,
 } from "./Constants";
+import { PublicPage } from "./pages/PublicPage";
 
 const history = createBrowserHistory();
 
@@ -37,6 +39,10 @@ const pages = [
   {
     path: HOME_PAGE_PATH,
     Component: HomePage,
+  },
+  {
+    path: PUBLIC_PAGE_PATH,
+    Component: PublicPage,
   },
 ];
 

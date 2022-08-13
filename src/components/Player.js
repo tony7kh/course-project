@@ -8,6 +8,8 @@ import {
   actionPrevTrack,
   actionNextTrack,
   actionSetVolume,
+  actionSetDuration,
+  actionSetCurrentTime,
 } from "../redux/actions/playerActions/playerActions";
 import { URL } from "../Constants";
 import { isEmpty } from "lodash";
@@ -21,13 +23,13 @@ import VolumeUp from "@mui/icons-material/VolumeUp";
 const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
   const [currentTrack, setCurrentTrack] = useState({});
   const [duration, setDuration] = useState("00:00");
-  const [sliderValue, setSliderValue] = useState(0);
+  const [ProgressBarValue, setProgressBarValue] = useState(0);
   const [currentTime, setCurrentTime] = useState("00:00");
   const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(false);
   const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
   const [volume, setVolume] = useState(100);
   let audioRef;
-  let sliderRef;
+  let ProgressBarRef;
 
   useEffect(() => {
     if (trackCurrentIndex > -1) {
@@ -68,25 +70,27 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
   };
 
   const onTimeUpdate = () => {
-    setSliderValue(Math.floor(audioRef.currentTime));
-    setCurrentTime(calcTrackLength(sliderRef.value));
+    setProgressBarValue(Math.floor(audioRef.currentTime));
+    setCurrentTime(calcTrackLength(ProgressBarRef.value));
+    store.dispatch(actionSetCurrentTime(Math.floor(audioRef.currentTime)));
   };
 
   const onLoadMetadata = () => {
     setDuration(calcTrackLength(audioRef.duration));
-    setSliderMax();
+    store.dispatch(actionSetDuration(audioRef.duration));
+    setProgressBarMax();
   };
 
-  const setSliderMax = () => {
-    sliderRef.max = Math.floor(audioRef.duration);
+  const setProgressBarMax = () => {
+    ProgressBarRef.max = Math.floor(audioRef.duration);
   };
 
-  const onSliderInput = () => {
-    setCurrentTime(calcTrackLength(sliderRef.value));
+  const onProgressBarInput = () => {
+    setCurrentTime(calcTrackLength(ProgressBarRef.value));
   };
 
-  const onSliderChange = () => {
-    audioRef.currentTime = sliderRef.value;
+  const onProgressBarChange = () => {
+    audioRef.currentTime = ProgressBarRef.value;
   };
 
   const playAudio = () => {
@@ -113,26 +117,26 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
     const volume = event.target.value;
     setVolume(volume);
     audioRef.volume = volume / 100;
-    store.dispatch(actionSetVolume(volume));
+    store.dispatch(actionSetVolume(volume / 100));
   };
   const toggleMute = (event) => {
     const volume = audioRef.volume;
     volume > 0 ? (audioRef.volume = 0) : (audioRef.volume = volume);
   };
-  return (
+  return !isEmpty(currentTrack) ? (
     <Box className="Player">
       <Box>
         {" "}
         <input
           ref={(e) => {
-            sliderRef = e;
+            ProgressBarRef = e;
           }}
-          onInput={onSliderInput}
-          onChange={onSliderChange}
+          onInput={onProgressBarInput}
+          onChange={onProgressBarChange}
           className="Player_progress_bar"
           type="range"
           max="100"
-          value={sliderValue}
+          value={ProgressBarValue}
         />
       </Box>
       {!isEmpty(currentTrack) ? (
@@ -177,11 +181,13 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
         <Button onClick={toggleMute}>Mute</Button>
       </Box>
     </Box>
+  ) : (
+    ""
   );
 };
 
 export const CPlayer = connect((state) => ({
   track: state.promise?.trackByID?.payload,
-  tracksFromPlaylist: state.promise?.tracksFromPlaylist?.payload?.tracks,
+  tracksFromPlaylist: state.player?.playlist?.tracks,
   trackCurrentIndex: state.player?.trackIndex,
 }))(Player);

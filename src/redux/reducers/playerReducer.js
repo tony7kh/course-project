@@ -70,5 +70,23 @@ export function playerReducer(
       volume: payload,
     };
   }
+  if (type === "PLAYER_SET_PLAYLIST") {
+    return {
+      ...state,
+      playlist: payload,
+    };
+  }
+  if (type === "PLAYER_SET_DURATION") {
+    return {
+      ...state,
+      duration: payload,
+    };
+  }
+  if (type === "PLAYER_SET_CURRENT_TIME") {
+    return {
+      ...state,
+      currentTime: payload,
+    };
+  }
   return state;
 }
