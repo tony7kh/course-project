@@ -1,16 +1,17 @@
-.Playlists{
-    border: 1px solid grey;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    width: 75%;
-    padding: 10px 10px;
+.Playlists {
+  display: flex;
+  flex-wrap: wrap;
+  width: 75%;
+  padding: 10px 10px;
 }
 
-.Playlist-item{
-    width: 200px;
-    min-width: 20%;
-    height: 220px;
-    margin: 10px 10px;
-    border: 1px solid black;
+.Playlist-item {
+  width: 250px;
+  max-width: 30%;
+  height: 270px;
+  margin: 10px 10px;
+}
+
+.Playlist-cover {
+  height: 150px;
 }

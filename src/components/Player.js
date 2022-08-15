@@ -19,6 +19,11 @@ import { Typography } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import Ticker from "react-ticker";
 
 const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
   const [currentTrack, setCurrentTrack] = useState({});
@@ -119,10 +124,6 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
     audioRef.volume = volume / 100;
     store.dispatch(actionSetVolume(volume / 100));
   };
-  const toggleMute = (event) => {
-    const volume = audioRef.volume;
-    volume > 0 ? (audioRef.volume = 0) : (audioRef.volume = volume);
-  };
   return !isEmpty(currentTrack) ? (
     <Box className="Player">
       <Box>
@@ -154,31 +155,44 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
         "Please, choose a track"
       )}
       <Box className="Player_title">
-        {currentTime} / {duration.toString()}
-        <Typography variant="h3" component="div">
-          {currentTrack.originalFileName}
+        <Typography>
+          {" "}
+          {currentTime} / {duration.toString()}
         </Typography>
+
+        <Ticker offset={5} speed={5} mode="await">
+          {() => (
+            <Typography variant="h3" component="span" className="Tittle-name">
+              {currentTrack.originalFileName}
+            </Typography>
+          )}
+        </Ticker>
       </Box>
 
       <Box className="Player_buttons">
         <Button onClick={() => prevTrack()} disabled={isPrevButtonDisabled}>
-          PrevTrack
+          <SkipPreviousIcon />
         </Button>
-        <Button onClick={() => playAudio()}>Play</Button>
-        <Button onClick={() => pauseAudio()}>Pause</Button>
+        <Button onClick={() => playAudio()}>
+          <PlayCircleFilledWhiteIcon />
+        </Button>
+        <Button onClick={() => pauseAudio()}>
+          <PauseIcon />
+        </Button>
         <Button onClick={() => nextTrack()} disabled={isNextButtonDisabled}>
-          NextTrack
+          <SkipNextIcon />
         </Button>
-        <VolumeDown />
-        <Slider
-          className="Player_volume_slider"
-          onChange={onVolumeChange}
-          type="range"
-          max="100"
-          value={volume}
-        />
-        <VolumeUp />
-        <Button onClick={toggleMute}>Mute</Button>
+        <Box className="Player__volume-bar">
+          <VolumeDown />
+          <Slider
+            className="Player_volume_slider"
+            onChange={onVolumeChange}
+            type="range"
+            max="100"
+            value={volume}
+          />
+          <VolumeUp />
+        </Box>
       </Box>
     </Box>
   ) : (

@@ -16,11 +16,17 @@ export const DefaultAppBar = () => {
           <Button color="primary" variant="contained">
             <Link to="/login">Log In</Link>
           </Button>
-          <Button color="secondary" variant="outlined">
+          <Button
+            sx={{
+              ml: 2,
+            }}
+            color="secondary"
+            variant="outlined"
+          >
             <Link to="/signup">Sign up</Link>
           </Button>
         </Toolbar>
       </AppBar>
     </Box>
   );
-}
+};

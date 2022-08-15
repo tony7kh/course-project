@@ -10,7 +10,7 @@ export const actionAllPlaylists = () => {
 }
   }
 }`,
-    { query: JSON.stringify([{}, { sort: [{ _id: -1 }], limit: [30] }]) }
+    { query: JSON.stringify([{}, { sort: [{ _id: -1 }], limit: [50] }]) }
   );
   return actionPromise("allPlaylists", queryPromise);
 };

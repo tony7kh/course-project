@@ -1,6 +1,5 @@
-.Tracklist__items {
+.Tracklist {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
-  width: 20%;
 }

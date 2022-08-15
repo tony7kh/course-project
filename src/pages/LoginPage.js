@@ -59,7 +59,7 @@ const LoginForm = ({ onLogin }) => {
                 onLogin(login, password);
                 setInterval(() => {
                   window.location.href = HOME_PAGE_PATH;
-                }, 0);
+                }, 1);
               }}
               disabled={
                 (login.length > 3 ? false : true) ||

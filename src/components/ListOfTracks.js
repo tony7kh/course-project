@@ -1,5 +1,4 @@
 import "../style/ListOfTracks.css";
-import { actionAllTracks } from "../redux/actions/ActionAllTracks";
 import { actionTrackByID } from "../redux/actions/ActionTrackByID";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
@@ -26,7 +25,7 @@ const TrackItem = ({ track }) => {
   const { _id, originalFileName } = track;
 
   return (
-    <ListItem className="items-list__item" disablePadding>
+    <ListItem className="Tracklist-item" disablePadding>
       <ListItemButton
         onClick={() => {
           store.dispatch(actionTrackByID(_id));
@@ -37,7 +36,12 @@ const TrackItem = ({ track }) => {
           <AudiotrackIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link underline="hover" to={`${HOME_PAGE_PATH}/track/${_id}`}>
+          <Link
+            sx={{
+              decoration: "none",
+            }}
+            to={`${HOME_PAGE_PATH}/track/${_id}`}
+          >
             {originalFileName}
           </Link>
         </ListItemText>
@@ -45,7 +49,7 @@ const TrackItem = ({ track }) => {
     </ListItem>
   );
 };
-const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
+const TrackList = ({ tracks = [], selectedID, playlistName }) => {
   useEffect(() => {
     if (selectedID && tracks !== null) {
       console.log("selected ID", selectedID);
@@ -57,23 +61,26 @@ const TrackList = ({ tracks = [], status, selectedID, playlistName }) => {
     }
   }, [tracks, selectedID]);
 
-  return !isEmpty(tracks) && tracks !== null ? (
-    <Box className="Tracklist__items" sx={{ width: "100%", maxWidth: 360 }}>
-      <Typography variant="h6">{playlistName}</Typography>
-      <List className="Tracklist__items-list">
-        {tracks.map((track) => (
-          <TrackItem track={track} key={track._id} />
-        ))}
-      </List>
+  return (
+    <Box>
+      <Typography variant="h5">{playlistName}</Typography>
+      {!isEmpty(tracks) && tracks !== null ? (
+        <Box className="Tracklist">
+          <List className="Tracklist-list">
+            {tracks.map((track) => (
+              <TrackItem track={track} key={track._id} />
+            ))}
+          </List>
+        </Box>
+      ) : (
+        ""
+      )}
     </Box>
-  ) : (
-    ""
   );
 };
 
 export const CTrackList = connect((state) => ({
-  tracks: state.promise?.tracksFromPlaylist?.payload?.tracks,
-  status: state.promise.allTracks?.status,
+  tracks: state.player?.playlist?.tracks,
   selectedID: state.promise?.trackByID?.payload?._id,
-  playlistName: state.promise?.tracksFromPlaylist?.payload?.name,
+  playlistName: state.player?.playlist?.name,
 }))(TrackList);

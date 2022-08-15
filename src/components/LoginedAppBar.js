@@ -8,10 +8,15 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { actionAuthLogout } from "../redux/actions/ActionAuthLogout";
 import { store } from "../redux/Store";
+import {
+  HOME_PAGE_PATH,
+  PUBLIC_PAGE_PATH,
+  PROFILE_PAGE_PATH,
+} from "../Constants";
 
 const CUserName = connect((state) => ({
   children: state.auth.payload?.sub.login || "",
-  to: "/profile",
+  to: PROFILE_PAGE_PATH,
 }))(Link);
 
 export const LoginedAppBar = () => {
@@ -20,10 +25,10 @@ export const LoginedAppBar = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="homepage">Audioplayer</Link>
+            <Link to={HOME_PAGE_PATH}>Audioplayer</Link>
           </Typography>
           <Typography color="primary" variant="contained">
-            <Link to="/profile">
+            <Link to={PROFILE_PAGE_PATH}>
               <CUserName />
             </Link>
           </Typography>
@@ -32,10 +37,13 @@ export const LoginedAppBar = () => {
               store.dispatch(actionAuthLogout());
               window.location.replace("/");
             }}
-            color="secondary"
+            color="primary"
             variant="outlined"
+            sx={{
+              ml: 2,
+            }}
           >
-            <Link to="/homepage">Log Out</Link>
+            <Link to={PUBLIC_PAGE_PATH}>Log Out</Link>
           </Button>
         </Toolbar>
       </AppBar>

@@ -4,10 +4,10 @@
   flex-direction: column;
   position: fixed;
   padding: 30px 20px;
-  background: rgba(180, 180, 180, 0.9);
+  background: rgba(180, 180, 180, 0.5);
   bottom: 0;
   right: 0;
-  width: 21%;
+  width: 30%;
 }
 
 .Player_progress_bar {
@@ -16,4 +16,7 @@
 .Player_volume_slider {
   max-width: 50%;
   margin: 0 10px;
+}
+.Tittle-name {
+  white-space: nowrap;
 }

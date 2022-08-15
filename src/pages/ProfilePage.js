@@ -13,13 +13,12 @@ import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import CardMedia from "@mui/material/CardMedia";
-import { useEffect, useState, useSyncExternalStore } from "react";
-import { HOME_PAGE_PATH } from "../Constants";
+import { useEffect, useState } from "react";
 
 localStorage.authToken &&
   store.dispatch(actionAboutMe(store.getState().auth.payload.sub.id));
 
-const actionUnloadFile = async (file) => {
+const actionUploadTrack = async (file) => {
   const uploadFile = async (file) => {
     const url = `http://player.node.ed.asmer.org.ua/track`;
     let formData = await new FormData();
@@ -64,12 +63,7 @@ const actionNewPlaylistWithTracks = async (name, description, tracks) => {
   const action = await gqlPromise;
   return action;
 };
-const UploadBlock = ({
-  _id,
-  defaultTracks = [],
-  valueOfLoadingPicture,
-  actionBackToStart,
-}) => {
+const UploadBlock = ({ defaultTracks = [] }) => {
   const [tracks, ChangeTracks] = useState(defaultTracks);
   const [tracksIds, ChangeTracksIds] = useState(defaultTracks);
 
@@ -93,7 +87,6 @@ const UploadBlock = ({
           sx={{ width: "100%", margin: "20px 0" }}
           id="standard-multiline-static"
           multiline
-          rows={3}
           variant="standard"
           placeholder="Playlist description"
           onChange={(e) =>
@@ -103,7 +96,6 @@ const UploadBlock = ({
         />
         <Drop
           trackData={(track) => {
-            console.log("!!!!!", track);
             ChangeTracks((prevArray) =>
               prevArray.concat(
                 track.map((img) => {
@@ -119,7 +111,7 @@ const UploadBlock = ({
               )
             );
           }}
-          onUpload={actionUnloadFile}
+          onUpload={actionUploadTrack}
         />
         <div style={{ display: "flex" }}>
           {Array.isArray(tracks)
@@ -140,6 +132,7 @@ const UploadBlock = ({
               ? actionNewPlaylist(name, description)
               : actionNewPlaylistWithTracks(name, description, tracksIds);
           }}
+          disabled={name.length < 5}
         >
           <h3>Add playlist</h3>
         </Button>

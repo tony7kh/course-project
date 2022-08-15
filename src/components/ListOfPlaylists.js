@@ -12,32 +12,30 @@ import { CardActionArea } from "@mui/material";
 import { actionSetPlaylist } from "../redux/actions/playerActions/playerActions";
 
 import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
-import { actionTracksFromPlaylist } from "../redux/actions/ActionTracksFromPlaylist";
 
 import { Triangle } from "react-loader-spinner";
 
 store.dispatch(actionAllPlaylists("[{}]"));
 
 const ActionAreaCard = ({ playlist = {} }) => {
-  const { _id, name, description } = playlist;
+  const { name, description } = playlist;
 
   return (
     <Card
+      className="Playlist-item"
       onClick={() => {
-        store.dispatch(actionTracksFromPlaylist(_id));
         store.dispatch(actionSetPlaylist(playlist));
       }}
     >
       <CardActionArea>
-        <CardMedia
-          className="Playlist-item"
+        <CardMedia className="Playlist-cover"
           component="img"
-          image="https://img.freepik.com/free-vector/musical-notes-pattern-on-black-background_1017-32303.jpg?w=2000&t=st=1659974772~exp=1659975372~hmac=d023aca47a64bad02c6dcb61f7557f22e788632df6eae440ff32615068104cbe"
+          image="https://www.colorhexa.com/1a76d2.png"
           alt="playlist-cover"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {!name ? "no name" : name}
+            {name || "no name"}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {description}
@@ -50,7 +48,7 @@ const ActionAreaCard = ({ playlist = {} }) => {
 
 const ListOfPlaylists = ({ playlists = [], status }) =>
   status === "PENDING" || !status ? (
-    <Triangle color="#00BFFF" height={80} width={80} />
+    <Triangle color="#1A76D2" height="100" width="1 00" />
   ) : (
     <div className="Playlists">
       {playlists.map((playlist) => (
