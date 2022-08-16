@@ -2,4 +2,5 @@
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
+  width: 30vw;
 }

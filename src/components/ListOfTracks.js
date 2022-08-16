@@ -36,12 +36,7 @@ const TrackItem = ({ track }) => {
           <AudiotrackIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link
-            sx={{
-              decoration: "none",
-            }}
-            to={`${HOME_PAGE_PATH}/track/${_id}`}
-          >
+          <Link color="primary" to={`${HOME_PAGE_PATH}/track/${_id}`}>
             {originalFileName}
           </Link>
         </ListItemText>
@@ -62,16 +57,16 @@ const TrackList = ({ tracks = [], selectedID, playlistName }) => {
   }, [tracks, selectedID]);
 
   return (
-    <Box>
-      <Typography variant="h5">{playlistName}</Typography>
+    <Box className="Tracklist">
+      <Typography color={"primary"} variant="h5">
+        {playlistName}
+      </Typography>
       {!isEmpty(tracks) && tracks !== null ? (
-        <Box className="Tracklist">
-          <List className="Tracklist-list">
-            {tracks.map((track) => (
-              <TrackItem track={track} key={track._id} />
-            ))}
-          </List>
-        </Box>
+        <List className="Tracklist-list">
+          {tracks.map((track) => (
+            <TrackItem track={track} key={track._id} />
+          ))}
+        </List>
       ) : (
         ""
       )}

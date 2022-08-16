@@ -16,8 +16,10 @@ import {
   PROFILE_PAGE_PATH,
   HOME_PAGE_PATH,
   PUBLIC_PAGE_PATH,
+  ADD_PLAYLIST_PAGE_PATH,
 } from "./Constants";
 import { PublicPage } from "./pages/PublicPage";
+import { AddPlaylistPage } from "./pages/AddPlaylistPage";
 
 const history = createBrowserHistory();
 
@@ -43,6 +45,10 @@ const pages = [
   {
     path: PUBLIC_PAGE_PATH,
     Component: PublicPage,
+  },
+  {
+    path: ADD_PLAYLIST_PAGE_PATH,
+    Component: AddPlaylistPage
   },
 ];
 

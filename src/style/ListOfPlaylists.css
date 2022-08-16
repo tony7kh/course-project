@@ -1,8 +1,8 @@
 .Playlists {
   display: flex;
   flex-wrap: wrap;
-  width: 75%;
   padding: 10px 10px;
+  width: 70vw;
 }
 
 .Playlist-item {

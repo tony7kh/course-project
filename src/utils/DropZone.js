@@ -1,13 +1,13 @@
-import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
+import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import React from "react";
 import Dropzone from "react-dropzone";
 
-export default function Drop({ imageData, onUpload }) {
+export default function Drop({ trackData, onUpload }) {
   return (
     <Dropzone
       onDrop={async (acceptedFiles) => {
-        const image = await onUpload(acceptedFiles);
-        imageData(image);
+        const track = await onUpload(acceptedFiles);
+        trackData(track);
       }}
     >
       {({ getRootProps, getInputProps }) => (
@@ -18,13 +18,12 @@ export default function Drop({ imageData, onUpload }) {
           >
             <input {...getInputProps()} />
             <p>
-              <AddPhotoAlternateOutlinedIcon />
+              <LibraryMusicIcon />
               Drag 'n' drop some files here, or click to select files
             </p>
           </div>
         </section>
       )}
-      {/* <div>{arrOFPictures.map(picture => <div>{picture.url}</div>)}</div> */}
     </Dropzone>
   );
 }

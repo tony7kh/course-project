@@ -152,7 +152,7 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
           ></audio>
         </>
       ) : (
-        "Please, choose a track"
+        ""
       )}
       <Box className="Player_title">
         <Typography>
@@ -162,7 +162,12 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
 
         <Ticker offset={5} speed={5} mode="await">
           {() => (
-            <Typography variant="h3" component="span" className="Tittle-name">
+            <Typography
+              color={"primary"}
+              variant="h6"
+              component="span"
+              className="Tittle-name"
+            >
               {currentTrack.originalFileName}
             </Typography>
           )}
