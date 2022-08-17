@@ -17,9 +17,11 @@ import {
   HOME_PAGE_PATH,
   PUBLIC_PAGE_PATH,
   ADD_PLAYLIST_PAGE_PATH,
+  CHANGE_AVATAR_PAGE_PATH,
 } from "./Constants";
 import { PublicPage } from "./pages/PublicPage";
 import { AddPlaylistPage } from "./pages/AddPlaylistPage";
+import { ChangeAvatarPage } from "./pages/ChangeAvatarPage";
 
 const history = createBrowserHistory();
 
@@ -48,8 +50,10 @@ const pages = [
   },
   {
     path: ADD_PLAYLIST_PAGE_PATH,
-    Component: AddPlaylistPage
+    Component: AddPlaylistPage,
   },
+  { path: CHANGE_AVATAR_PAGE_PATH, 
+    Component: ChangeAvatarPage },
 ];
 
 const App = () => (

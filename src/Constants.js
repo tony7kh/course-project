@@ -6,3 +6,4 @@ export const HOME_PAGE_PATH = "/homepage";
 export const UPLOAD_PAGE_PATH = "/upload";
 export const PUBLIC_PAGE_PATH = "/public-page";
 export const ADD_PLAYLIST_PAGE_PATH = "/add-playlist";
+export const CHANGE_AVATAR_PAGE_PATH = "/change-avatar";

@@ -54,7 +54,7 @@ const ActionAreaCard = ({ playlist = {} }) => {
 
 const ListOfPlaylists = ({ playlists = [], status }) =>
   status === "PENDING" || !status ? (
-    <Triangle color="#1A76D2" height="100" width="1 00" />
+    <Triangle color="#1A76D2" height="100" width="100" />
   ) : (
     <Box>
       <Link to={ADD_PLAYLIST_PAGE_PATH}>

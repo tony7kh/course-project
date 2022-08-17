@@ -1,6 +1,6 @@
 import React from "react";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
-import Drop from "../utils/DropZone";
+import Drop from "../utils/DropZoneForTracks";
 import { gql } from "../utils/GQL";
 import { Card } from "@mui/material";
 import Input from "@mui/material/Input";
@@ -107,10 +107,7 @@ const UploadBox = ({ defaultTracks = [] }) => {
         <div style={{ display: "flex" }}>
           {Array.isArray(tracks)
             ? tracks.map((track) => (
-                <CardMedia
-                  key={track.url}
-                  track={track.url}
-                >
+                <CardMedia key={track.url} track={track.url}>
                   <LibraryMusicIcon />
                 </CardMedia>
               ))

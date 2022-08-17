@@ -23,7 +23,6 @@ import PauseIcon from "@mui/icons-material/Pause";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
-import Ticker from "react-ticker";
 
 const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
   const [currentTrack, setCurrentTrack] = useState({});
@@ -37,9 +36,8 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
   let ProgressBarRef;
 
   useEffect(() => {
-    if (trackCurrentIndex > -1) {
-      const trackFromPlaylist =
-        tracksFromPlaylist[new Number(trackCurrentIndex)];
+    if (trackCurrentIndex > -1 && trackCurrentIndex !== null) {
+      const trackFromPlaylist = tracksFromPlaylist[Number(trackCurrentIndex)];
       setCurrentTrack(trackFromPlaylist);
     }
   }, [tracksFromPlaylist, trackCurrentIndex]);
@@ -145,6 +143,7 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
           <audio
             onTimeUpdate={onTimeUpdate}
             onLoadedMetadata={onLoadMetadata}
+            onEnded={nextTrack}
             ref={(e) => {
               audioRef = e;
             }}
@@ -159,19 +158,14 @@ const Player = ({ track = {}, tracksFromPlaylist = [], trackCurrentIndex }) => {
           {" "}
           {currentTime} / {duration.toString()}
         </Typography>
-
-        <Ticker offset={5} speed={5} mode="await">
-          {() => (
-            <Typography
-              color={"primary"}
-              variant="h6"
-              component="span"
-              className="Tittle-name"
-            >
-              {currentTrack.originalFileName}
-            </Typography>
-          )}
-        </Ticker>
+        <Typography
+          color={"primary"}
+          variant="h6"
+          component="span"
+          className="Tittle-name"
+        >
+          {currentTrack.originalFileName}
+        </Typography>
       </Box>
 
       <Box className="Player_buttons">
