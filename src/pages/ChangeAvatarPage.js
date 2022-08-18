@@ -1,21 +1,13 @@
-import React from "react";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+import React, { useEffect, useState } from "react";
 import Drop from "../utils/DropZoneForAvatar";
 import { gql } from "../utils/GQL";
-import { Card } from "@mui/material";
-import Input from "@mui/material/Input";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import CardMedia from "@mui/material/CardMedia";
-import { useEffect, useState } from "react";
-
 import { store } from "../redux/Store";
-import { actionAboutMe } from "../redux/actions/ActionAboutMe";
-import { connect } from "react-redux";
-
-import ImageIcon from "@mui/icons-material/Image";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { PROFILE_PAGE_PATH } from "../Constants";
+
+import { Card } from "@mui/material";
+import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
+import ImageIcon from "@mui/icons-material/Image";
 
 const actionUploadPhoto = async (file) => {
   const uploadFile = async (file) => {

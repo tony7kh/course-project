@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { actionFullLogin } from "../redux/actions/ActionFullLogin";
+import { actionFullRegister } from "../redux/actions/ActionFullRegister";
+import { HOME_PAGE_PATH } from "../Constants";
 
 import { Box, Card } from "@mui/material";
 import Button from "@mui/material/Button";
-
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 
@@ -67,9 +67,14 @@ const RegisterForm = ({ onLogin }) => {
               </Typography>
             </Box>
             <Button
-              onClick={() => onLogin(login, password)}
+              onClick={() => {
+                onLogin(login, password);
+                setInterval(() => {
+                  window.location.href = HOME_PAGE_PATH;
+                }, 1);
+              }}
               sx={{
-                mt: 2, // margin top
+                mt: 2,
                 height: 30,
               }}
               disabled={
@@ -87,7 +92,9 @@ const RegisterForm = ({ onLogin }) => {
     </Box>
   );
 };
-const CRegisterForm = connect(null, { onLogin: actionFullLogin })(RegisterForm);
+const CRegisterForm = connect(null, { onLogin: actionFullRegister })(
+  RegisterForm
+);
 
 export const RegisterPage = () => {
   return <CRegisterForm />;

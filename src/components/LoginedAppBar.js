@@ -1,21 +1,22 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { actionAuthLogout } from "../redux/actions/ActionAuthLogout";
-import { store } from "../redux/Store";
+import React from "react";
 import {
   HOME_PAGE_PATH,
   PUBLIC_PAGE_PATH,
   PROFILE_PAGE_PATH,
 } from "../Constants";
+import { store } from "../redux/Store";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { actionAuthLogout } from "../redux/actions/ActionAuthLogout";
+
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const CUserName = connect((state) => ({
-  children: state.auth.payload?.sub.login || "",
+  children: state.auth.payload?.sub.login,
   to: PROFILE_PAGE_PATH,
 }))(Link);
 

@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { actionAboutMe } from "../redux/actions/ActionAboutMe";
@@ -36,9 +35,10 @@ const Profile = ({ user = {} }) => {
               src={URL + user.avatar?.url}
             />
           ) : (
-            <Typography>"Тут может быть ваше фото"</Typography>
+            <Typography variant="p" color={"primary"}>
+              Тут может быть ваше фото
+            </Typography>
           )}
-          {/* <Typography>{user.avatar || "Тут может быть ваше фото"}</Typography> */}
           <Typography color={"primary"} variant="h3">
             {user.login}
           </Typography>

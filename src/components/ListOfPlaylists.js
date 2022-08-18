@@ -2,6 +2,12 @@ import "../style/ListOfPlaylists.css";
 import React from "react";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
+import { ADD_PLAYLIST_PAGE_PATH } from "../Constants";
+import { Link } from "react-router-dom";
+
+import { actionSetPlaylist } from "../redux/actions/playerActions/playerActions";
+import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
+
 
 import { Box } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -9,16 +15,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { CardActionArea } from "@mui/material";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
-import { actionSetPlaylist } from "../redux/actions/playerActions/playerActions";
-
-import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
 
 import { Triangle } from "react-loader-spinner";
-import { ADD_PLAYLIST_PAGE_PATH } from "../Constants";
 
 store.dispatch(actionAllPlaylists("[{}]"));
 

@@ -1,9 +1,13 @@
+import React, { useEffect } from "react";
 import "../style/ListOfTracks.css";
+import { HOME_PAGE_PATH } from "../Constants";
+import isEmpty from "lodash.isempty";
+
 import { actionTrackByID } from "../redux/actions/ActionTrackByID";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
+
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,15 +15,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import { Typography } from "@mui/material";
+
 import {
   actionGetTrack,
   actionSetIndex,
 } from "../redux/actions/playerActions/playerActions";
-import { Typography } from "@mui/material";
-import { HOME_PAGE_PATH } from "../Constants";
-import isEmpty from "lodash.isempty";
-
-// store.dispatch(actionAllTracks());
 
 const TrackItem = ({ track }) => {
   const { _id, originalFileName } = track;
@@ -35,8 +36,12 @@ const TrackItem = ({ track }) => {
         <ListItemIcon>
           <AudiotrackIcon />
         </ListItemIcon>
-        <ListItemText>
-          <Link color="primary" to={`${HOME_PAGE_PATH}/track/${_id}`}>
+        <ListItemText color={"primary"}>
+          <Link
+            underline="hover"
+            color="primary"
+            to={`${HOME_PAGE_PATH}/track/${_id}`}
+          >
             {originalFileName}
           </Link>
         </ListItemText>
