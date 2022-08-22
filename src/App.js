@@ -52,23 +52,24 @@ const pages = [
     path: ADD_PLAYLIST_PAGE_PATH,
     Component: AddPlaylistPage,
   },
-  { path: CHANGE_AVATAR_PAGE_PATH, 
-    Component: ChangeAvatarPage },
+  { path: CHANGE_AVATAR_PAGE_PATH, Component: ChangeAvatarPage },
 ];
 
-const App = () => (
-  <Router history={history}>
-    <Provider store={store}>
-      {localStorage.authToken ? <LoginedAppBar /> : <DefaultAppBar />}
-      <div className="Wrapper">
-        <Switch>
-          {pages.map(({ path, Component }) => (
-            <Route key={path} path={path} component={Component} />
-          ))}
-        </Switch>
-      </div>
-    </Provider>
-  </Router>
-);
+const App = () => {
+  return (
+    <Router history={history}>
+      <Provider store={store}>
+        {localStorage.authToken ? <LoginedAppBar /> : <DefaultAppBar />}
+        <div className="Wrapper">
+          <Switch>
+            {pages.map(({ path, Component }) => (
+              <Route key={path} path={path} component={Component} />
+            ))}
+          </Switch>
+        </div>
+      </Provider>
+    </Router>
+  );
+};
 
 export default App;

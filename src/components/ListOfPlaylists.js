@@ -1,5 +1,5 @@
 import "../style/ListOfPlaylists.css";
-import React from "react";
+import React, { useState } from "react";
 import { store } from "../redux/Store";
 import { connect } from "react-redux";
 import { ADD_PLAYLIST_PAGE_PATH } from "../Constants";
@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { actionSetPlaylist } from "../redux/actions/playerActions/playerActions";
 import { actionAllPlaylists } from "../redux/actions/ActionAllPlaylists";
 
-
 import { Box } from "@mui/material";
+import { TextField } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -17,7 +17,6 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { CardActionArea } from "@mui/material";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-
 
 import { Triangle } from "react-loader-spinner";
 
@@ -53,8 +52,13 @@ const ActionAreaCard = ({ playlist = {} }) => {
   );
 };
 
-const ListOfPlaylists = ({ playlists = [], status }) =>
-  status === "PENDING" || !status ? (
+const ListOfPlaylists = ({ playlists = [], status }) => {
+  const [value, setValue] = useState("");
+
+  const filtredPlaylists = playlists.filter((playlist) => {
+    return playlist?.name?.toLowerCase()?.includes(value.toLowerCase());
+  });
+  return status === "PENDING" || !status ? (
     <Triangle color="#1A76D2" height="100" width="100" />
   ) : (
     <Box>
@@ -64,13 +68,31 @@ const ListOfPlaylists = ({ playlists = [], status }) =>
           <Typography variant="h6">Add Playlist</Typography>
         </Button>
       </Link>
+      <Box
+        component="form"
+        sx={{
+          "& > :not(style)": { m: 1, minWidth: "400px" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          label="Search a playlist"
+          color="primary"
+          focused
+          type="text"
+          className="search_input"
+          onChange={(event) => setValue(event.target.value)}
+        />
+      </Box>
       <Box className="Playlists">
-        {playlists.map((playlist) => (
+        {filtredPlaylists.map((playlist) => (
           <ActionAreaCard playlist={playlist} key={playlist._id} />
         ))}
       </Box>
     </Box>
   );
+};
 export const CListOfPlaylists = connect((state) => ({
   playlists: state.promise.allPlaylists.payload,
   status: state.promise.allPlaylists?.status,
